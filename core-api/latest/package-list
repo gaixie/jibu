@@ -1,5 +1,8 @@
 org.gaixie.jibu
 org.gaixie.jibu.dao
+org.gaixie.jibu.dao.impl
+org.gaixie.jibu.mail
 org.gaixie.jibu.model
 org.gaixie.jibu.service
+org.gaixie.jibu.service.impl
 org.gaixie.jibu.utils
