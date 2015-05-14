@@ -32,7 +32,7 @@
 <div class='indent'>
 <table width='100%'>
 <tr><td class='container' valign='bottom'><b>
-0 Foreign Key Constraints:</b>
+2 Foreign Key Constraints:</b>
 </td><td class='container' align='right'>
 <table>
 <tr><td class='container'>
@@ -53,8 +53,19 @@
 </tr>
 </thead>
 <tbody>
- <tr>
-  <td class='detail' valign='top' colspan='4'>None detected</td>
+  <tr class='even'>
+  <td class='detail'>tokens_created_by_fkey</td>
+  <td class='detail'><a href='tables/tokens.html'>tokens</a>.created_by</td>
+  <td class='detail'><a href='tables/userbase.html'>userbase</a>.id</td>
+  <td class='detail'><span title='Restrict delete:
+ Parent cannot be deleted if children exist'>Restrict delete&nbsp;</span></td>
+ </tr>
+  <tr class='odd'>
+  <td class='detail'>userbase_invited_by_fkey</td>
+  <td class='detail'><a href='tables/userbase.html'>userbase</a>.invited_by</td>
+  <td class='detail'><a href='tables/userbase.html'>userbase</a>.id</td>
+  <td class='detail'><span title='Restrict delete:
+ Parent cannot be deleted if children exist'>Restrict delete&nbsp;</span></td>
  </tr>
 </tbody>
 </table>

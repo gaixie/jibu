@@ -21,5 +21,48 @@
             <column ascending="true" name="revision"/>
          </index>
       </table>
+      <table name="tokens" numRows="0" remarks="令牌" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('tokens_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="AUTO INCREMENT" size="10" type="serial"/>
+         <column autoUpdated="false" digits="0" id="1" name="value" nullable="false" remarks="令牌值，用于通过系统认证" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="type" nullable="false" remarks="令牌类型，如 password 表示该令牌只用于密码找回" size="16" type="varchar"/>
+         <column autoUpdated="false" digits="6" id="3" name="expiration_ts" nullable="false" remarks="令牌的过期时间" size="35" type="timestamptz"/>
+         <column autoUpdated="false" digits="0" id="4" name="send_to" nullable="false" remarks="令牌被发送到哪个邮箱，如密码找回，就发送到创建令牌的用户自己的邮箱。" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="created_by" nullable="false" remarks="创建此令牌的用户" size="10" type="int4">
+            <parent column="id" foreignKey="tokens_created_by_fkey" implied="false" onDeleteCascade="false" table="userbase"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="tokens_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="tokens_value_key" unique="true">
+            <column ascending="true" name="value"/>
+         </index>
+      </table>
+      <table name="userbase" numRows="0" remarks="用户" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('userbase_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="AUTO INCREMENT" size="10" type="serial">
+            <child column="created_by" foreignKey="tokens_created_by_fkey" implied="false" onDeleteCascade="false" table="tokens"/>
+            <child column="invited_by" foreignKey="userbase_invited_by_fkey" implied="false" onDeleteCascade="false" table="userbase"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="username" nullable="false" remarks="用于登录的用户名" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="password" nullable="false" remarks="用于登录的用户密码" size="64" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="fullname" nullable="false" remarks="用于显示的全名，不设置默认为用户名" size="64" type="varchar"/>
+         <column autoUpdated="false" defaultValue="1" digits="0" id="4" name="type" nullable="false" remarks="用户的类型，1: 注册用户，2: 高级用户，4: 管理员。" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="5" name="emailaddress" nullable="false" remarks="用户的电子邮件地址" size="64" type="varchar"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="registered_ts" nullable="false" remarks="用户注册时间" size="35" type="timestamptz"/>
+         <column autoUpdated="false" digits="0" id="7" name="invited_by" nullable="false" remarks="注册用户的邀请用户" size="10" type="int4">
+            <parent column="id" foreignKey="userbase_invited_by_fkey" implied="false" onDeleteCascade="false" table="userbase"/>
+         </column>
+         <column autoUpdated="false" defaultValue="true" digits="0" id="8" name="enabled" nullable="false" remarks="用户的状态, TRUE 有效, FALSE 无效, 禁止登录" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="userbase_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="userbase_emailaddress_key" unique="true">
+            <column ascending="true" name="emailaddress"/>
+         </index>
+         <index name="userbase_username_key" unique="true">
+            <column ascending="true" name="username"/>
+         </index>
+      </table>
    </tables>
 </database>
